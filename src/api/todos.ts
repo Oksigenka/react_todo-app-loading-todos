@@ -12,6 +12,7 @@ export const addPost = ({ title, completed }: Omit<Todo, 'id' | 'userId'>) => {
   return client.post<Todo>('/todos', { title, userId: USER_ID, completed });
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const updateTodo = (todoId: number) => {
   return Promise.reject(new Error('Unable to update a todo'));
 };

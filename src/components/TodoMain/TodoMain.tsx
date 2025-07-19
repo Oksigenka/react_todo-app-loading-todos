@@ -16,7 +16,8 @@ export const TodoMain: React.FC<Prop> = ({ todos, toggleTodo }) => {
           data-cy="Todo"
           className={todo.completed ? 'todo completed' : 'todo'}
         >
-          <label className="todo__status-label" >
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+          <label className="todo__status-label">
             <input
               data-cy="TodoStatus"
               type="checkbox"

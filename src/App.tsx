@@ -3,7 +3,7 @@
 import React from 'react';
 import { UserWarning } from './UserWarning';
 import { USER_ID } from './api/todos';
-import { LoadindMessage } from './components/LoadingMessage';
+import { TodoPage } from './components/TodoPage';
 
 export const App: React.FC = () => {
   if (!USER_ID) {
@@ -14,7 +14,7 @@ export const App: React.FC = () => {
     <div className="todoapp">
       <h1 className="todoapp__title">todos</h1>
 
-      <LoadindMessage />
+      <TodoPage />
     </div>
   );
 };
