@@ -5,6 +5,7 @@ import { addPost, getTodos, updateTodo } from '../../api/todos';
 import { TodoHeader } from '../TodoHeader';
 import { TodoFooter } from '../TodoFooter';
 import { ErrorNotification } from '../ErrorNotification';
+import { Filter } from '../Enum';
 
 export const TodoPage: React.FC = () => {
   const [titleMessage, setTitleMessage] = useState('');
@@ -12,7 +13,7 @@ export const TodoPage: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [filtered, setFiltered] = useState<Todo[]>([]);
   // eslint-disable-next-line max-len, prettier/prettier
-  const [currentFilter, setCurrentFilter] = useState<'all' | 'active' | 'completed'>('all');
+  const [currentFilter, setCurrentFilter] = useState<Filter>(Filter.All);
 
   function loadTodos() {
     setErrorMessage('');
@@ -70,21 +71,21 @@ export const TodoPage: React.FC = () => {
     setTitleMessage('');
   };
 
+  const handleFilterChange = (filter: Filter) => {
+    setCurrentFilter(filter);
+  };
+
   useEffect(() => {
     let result = [...todos];
 
-    if (currentFilter === 'active') {
+    if (currentFilter === Filter.Active) {
       result = result.filter(todo => !todo.completed);
-    } else if (currentFilter === 'completed') {
+    } else if (currentFilter === Filter.Completed) {
       result = result.filter(todo => todo.completed);
     }
 
     setFiltered(result);
   }, [todos, currentFilter]);
-
-  const handleFilterChange = (filter: 'all' | 'active' | 'completed') => {
-    setCurrentFilter(filter);
-  };
 
   const cleaningErrormessage = () => {
     setErrorMessage('');

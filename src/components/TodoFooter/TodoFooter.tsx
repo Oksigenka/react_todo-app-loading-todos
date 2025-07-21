@@ -1,11 +1,33 @@
 import React from 'react';
 import { Todo } from '../../types/Todo';
+import { Filter } from '../Enum';
 
 type Props = {
   todos: Todo[];
-  currentFilter: 'all' | 'active' | 'completed';
-  onFilterChange: (filter: 'all' | 'active' | 'completed') => void;
+  currentFilter: Filter;
+  onFilterChange: (filter: Filter) => void;
 };
+
+const FILTER_LINKS: {
+  label: string;
+  value: Filter;
+  href: string;
+  dataCy: string;
+}[] = [
+  { label: 'All', value: Filter.All, href: '#/', dataCy: 'FilterLinkAll' },
+  {
+    label: 'Active',
+    value: Filter.Active,
+    href: '#/active',
+    dataCy: 'FilterLinkActive',
+  },
+  {
+    label: 'Completed',
+    value: Filter.Completed,
+    href: '#/completed',
+    dataCy: 'FilterLinkCompleted',
+  },
+];
 
 export const TodoFooter: React.FC<Props> = ({
   todos,
@@ -19,32 +41,17 @@ export const TodoFooter: React.FC<Props> = ({
       </span>
 
       <nav className="filter" data-cy="Filter">
-        <a
-          href="#/"
-          className={`filter__link ${currentFilter === 'all' ? 'selected' : ''}`}
-          data-cy="FilterLinkAll"
-          onClick={() => onFilterChange('all')}
-        >
-          All
-        </a>
-
-        <a
-          href="#/active"
-          className={`filter__link ${currentFilter === 'active' ? 'selected' : ''}`}
-          data-cy="FilterLinkActive"
-          onClick={() => onFilterChange('active')}
-        >
-          Active
-        </a>
-
-        <a
-          href="#/completed"
-          className={`filter__link ${currentFilter === 'completed' ? 'selected' : ''}`}
-          data-cy="FilterLinkCompleted"
-          onClick={() => onFilterChange('completed')}
-        >
-          Completed
-        </a>
+        {FILTER_LINKS.map(({ label, value, href, dataCy }) => (
+          <a
+            key={value}
+            href={href}
+            className={`filter__link ${currentFilter === value ? 'selected' : ''}`}
+            data-cy={dataCy}
+            onClick={() => onFilterChange(value)}
+          >
+            {label}
+          </a>
+        ))}
       </nav>
 
       <button
