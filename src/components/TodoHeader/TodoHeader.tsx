@@ -1,22 +1,20 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 
 type Props = {
   onSubmit: (event: React.FormEvent) => void;
   onTitleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   title: string;
+  isDisabled: boolean;
+  inputRef: React.RefObject<HTMLInputElement>;
 };
 
 export const TodoHeader: React.FC<Props> = ({
   onSubmit,
   onTitleChange,
   title,
+  isDisabled,
+  inputRef,
 }) => {
-  const inputFocus = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    inputFocus.current?.focus();
-  }, []);
-
   return (
     <header className="todoapp__header">
       <button
@@ -30,7 +28,8 @@ export const TodoHeader: React.FC<Props> = ({
           data-cy="NewTodoField"
           type="text"
           className="todoapp__new-todo"
-          ref={inputFocus}
+          disabled={isDisabled}
+          ref={inputRef}
           placeholder="What needs to be done?"
           value={title}
           onChange={onTitleChange}

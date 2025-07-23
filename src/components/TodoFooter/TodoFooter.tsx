@@ -1,11 +1,12 @@
 import React from 'react';
 import { Todo } from '../../types/Todo';
-import { Filter } from '../Enum';
+import { Filter } from '../../types/Enum';
 
 type Props = {
   todos: Todo[];
   currentFilter: Filter;
   onFilterChange: (filter: Filter) => void;
+  onDeletedCompleted: () => void;
 };
 
 const FILTER_LINKS: {
@@ -33,6 +34,7 @@ export const TodoFooter: React.FC<Props> = ({
   todos,
   currentFilter,
   onFilterChange,
+  onDeletedCompleted,
 }) => {
   return (
     <footer className="todoapp__footer" data-cy="Footer">
@@ -59,6 +61,7 @@ export const TodoFooter: React.FC<Props> = ({
         disabled={todos.every(todo => !todo.completed)}
         className="todoapp__clear-completed"
         data-cy="ClearCompletedButton"
+        onClick={onDeletedCompleted}
       >
         Clear completed
       </button>
